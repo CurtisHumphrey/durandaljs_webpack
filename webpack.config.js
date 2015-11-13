@@ -46,10 +46,10 @@ module.exports = {
 
   // // Output directories and file
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].page.js',
-    publicPath: '/'
+    path: path.join(__dirname, 'public/app'),
+    filename: '[name].[chunkhash].bundle.js',
+    chunkFilename: '[name].[chunkhash].bundle.js',
+    publicPath: '/app/'
   },
 
   // // Custom plugins
@@ -68,7 +68,10 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      template: 'app/index.template.html',
+      inject: true
+    })
   ],
 
   module: {
