@@ -3,7 +3,7 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     clean:
-      release: ["public/app/**/*"]
+      release: ["public/app/**/*","public/index.html"]
       
     webpack:
       options: require "./webpack.config.js"
@@ -12,12 +12,18 @@ module.exports = (grunt) ->
     "webpack-dev-server":
       options:
         webpack: webpackDevConfig
-        publicPath: "/" + webpackDevConfig.output.publicPath
+        publicPath: ""
+        contentBase: "public/"
       start:
         keepAlive: true
         webpack:
           devtool: "eval"
           debug: true
+          hot: false,
+          inline: true,
+          historyApiFallback: true,
+          stats: { colors: true },
+          progress: true
 
     template:
       process_index:
@@ -39,5 +45,5 @@ module.exports = (grunt) ->
 
   require('load-grunt-tasks')(grunt)
 
-  grunt.registerTask 'default', ['webpack-dev-server:start']
+  grunt.registerTask 'default', ['clean','webpack-dev-server:start']
   grunt.registerTask 'build', ['clean','webpack:build','template:process_index', 'connect:build']

@@ -5,6 +5,7 @@
 
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   // Main entry directory and file
@@ -35,14 +36,19 @@ module.exports = {
 
   // // Output directories and file
   output: {
-    path: 'dev/',
+    path: 'public/app/',
     filename: '[name].page.js',
     chunkFilename: '[name].page.js',
-    publicPath: 'dev/'
+    publicPath: ''
   },
 
   // // Custom plugins
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'app/index.template.html',
+      inject: true,
+      filename: 'index.html'
+    })
   ],
 
   module: {
@@ -76,7 +82,7 @@ module.exports = {
   devtool: 'source-map',
 
   devServer: {
-    contentBase: __dirname,
+    contentBase: path.join(__dirname, 'public'),
     hot: false,
     inline: true,
     historyApiFallback: true,
